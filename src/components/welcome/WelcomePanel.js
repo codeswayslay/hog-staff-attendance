@@ -11,7 +11,7 @@ import styles from '../styles';
 import { compose } from 'recompose';
 import logo from '../../hog-logo-alt.svg';
 
-const Welcome = (
+const WelcomePanel = (
   {
     classes,
     width,
@@ -77,4 +77,4 @@ const Welcome = (
     </div>
   </Fade>
 
-export default compose(withWidth(), withStyles(styles))(Welcome);
+export default compose(withWidth(), withStyles(styles))(WelcomePanel);

@@ -17,12 +17,23 @@ import {
 import styles from '../styles';
 import { compose } from 'recompose';
 import logo from '../../hog-logo-alt.svg';
-
+import ForgotPassDialogMessage from '../dialogs/DefaultMessageDialog';
 
 export default compose(withStyles(styles))(class extends Component {
+  state = {
+    openLoginDialog: false,
+    openForgotPassDialog: false
+  };
+
+  handleClickOpenCloseDialog = (name) => {
+    this.setState(prevState => ({
+      [name]: !prevState[name]
+    }));
+  }
 
   render() {
-    const { classes, delay, duration, login_fade_in } = this.props;
+    const { classes, delay, duration, login_fade_in } = this.props,
+      { openLoginDialog, openForgotPassDialog } = this.state;
     return <Fade
       in={login_fade_in}
       style={{transitionDelay: login_fade_in ? 0 : delay * 3.3}}
@@ -61,7 +72,7 @@ export default compose(withStyles(styles))(class extends Component {
                 id="username"
                 label="Username"
                 placeholder="Username"
-                className={classes.textfield}
+                className={classes.textfield_full}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -76,7 +87,7 @@ export default compose(withStyles(styles))(class extends Component {
                 label="Password"
                 placeholder="Password"
                 type="password"
-                className={classes.textfield}
+                className={classes.textfield_full}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -98,13 +109,26 @@ export default compose(withStyles(styles))(class extends Component {
                 </Button>
               </div>
               <div className={classes.center_contents}>
-                <Button size="small" className={classes.button}>
+                <Button
+                  size="small"
+                  className={classes.button}
+                  onClick={this.handleClickOpenCloseDialog.bind(this, "openForgotPassDialog")}
+                >
                   Forgot Password?
                 </Button>
               </div>
             </form>
           </Paper>
         </Slide>
+        <ForgotPassDialogMessage
+          key="forgotPass"
+          openKey="openForgotPassDialog"
+          openValue={openForgotPassDialog}
+          handleClose={this.handleClickOpenCloseDialog}
+          // transitionDirection="down"
+          title="Forgot Password"
+          message="This feature is currently not available on this release"
+        />
       </div>
     </Fade>
   }
